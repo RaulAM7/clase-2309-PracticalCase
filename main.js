@@ -4,16 +4,32 @@ const taskList = document.getElementById('list')
 
 const pendingTasks = document.getElementsByTagName('span')[0]
 let taskCounter = 0
+let buttonCounter = 1
 
 
 function addLiToList(e){
-    let newTask = document.createElement('li')
-    newTask.innerText = taskInput.value
-    taskList.appendChild(newTask)
+    let newTodo = document.createElement('div')
+    newTodo.innerHTML = '<span>' + taskInput.value + '</span> <button id="btn-' + buttonCounter + '">Delete ' + buttonCounter + ' </button>'
+    
+    taskList.appendChild(newTodo)
+
+
+    const deleteButton = document.getElementById('btn-' + buttonCounter)
+    deleteButton.addEventListener('click', deleteTodo)
+
     taskInput.value =""
 
     taskCounter++
     pendingTasks.innerText = taskCounter
+
+    buttonCounter++
+}
+
+function deleteTodo(e){
+    taskList.removeChild(e.currentTarget.parentNode)
+    taskCounter--
+    pendingTasks.innerText = taskCounter
 }
 
 addButton.addEventListener('click', addLiToList)
+
